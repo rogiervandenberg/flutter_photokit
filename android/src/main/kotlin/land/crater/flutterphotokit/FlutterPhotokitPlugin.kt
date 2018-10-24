@@ -1,5 +1,9 @@
 package land.crater.flutterphotokit
 
+import android.util.Log
+import android.os.Environment
+import java.io.File
+
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
@@ -16,6 +20,16 @@ class FlutterPhotokitPlugin(): MethodCallHandler {
   }
 
   override fun onMethodCall(call: MethodCall, result: Result): Unit {
-    result.notImplemented()
+    if (call.method.equals("saveToCameraRoll")) {
+      val filePath: String = call.argument("filePath")
+      val srcFile: File = File(filePath)
+      val fileName: String = srcFile.nameWithoutExtension + "." + srcFile.extension
+      val pictureDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "spesh")
+      val destFile: File = File(pictureDir, fileName)
+      srcFile.copyTo(destFile, true)
+      result.success(destFile.getAbsolutePath())
+    } else {
+      result.notImplemented()
+    }
   }
 }

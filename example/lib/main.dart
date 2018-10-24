@@ -110,6 +110,7 @@ class _MyAppState extends State<MyApp> {
       case _SaveStatus.SAVED:
         return Icon(Icons.check);
     }
+    return Container();
   }
 
   Widget _saveToAlbumRow() {
@@ -135,5 +136,6 @@ class _MyAppState extends State<MyApp> {
       case _SaveStatus.SAVED:
         return Icon(Icons.check);
     }
+    return Container();
   }
 }
